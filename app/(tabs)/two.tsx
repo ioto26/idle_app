@@ -40,10 +40,7 @@ export default function ScheduleScreen() {
     
     // Official Schedules
     fanData?.schedule.forEach(item => {
-      // Convert date format if needed (e.g. 04.01 -> 2026-04-01)
-      const dateKey = item.date.includes('.') 
-        ? `2026-${item.date.replace(/\./g, '-')}` // Simple logic for current year
-        : item.date;
+      const dateKey = item.date; // Scraper now provides YYYY-MM-DD
         
       if (!marks[dateKey]) marks[dateKey] = { dots: [] };
       
@@ -70,12 +67,7 @@ export default function ScheduleScreen() {
 
   // Filter events for selected day
   const dailyEvents = useMemo(() => {
-    const official = fanData?.schedule.filter(s => {
-      const dateKey = s.date.includes('.') 
-        ? `2026-${s.date.replace(/\./g, '-')}` 
-        : s.date;
-      return dateKey === selectedDate;
-    }) || [];
+    const official = fanData?.schedule.filter(s => s.date === selectedDate) || [];
 
     const personal = personalEvents.filter(e => e.date === selectedDate);
     
