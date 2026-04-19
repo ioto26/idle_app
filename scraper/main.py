@@ -8,7 +8,8 @@ def normalize_date(date_str):
     """Converts various date formats to YYYY-MM-DD."""
     if not date_str:
         return ""
-    clean_str = re.sub(r'[^0-9./-]', '', date_str.replace('\n', ''))
+    # Strip everything except numbers and separators
+    clean_str = re.sub(r'[^0-9./-]', '', date_str.replace('\n', '').replace('\r', ''))
     current_year = datetime.now().year
     
     match_full = re.search(r'(\d{4})[./-](\d{2})[./-](\d{2})', clean_str)
@@ -47,7 +48,9 @@ def scrape_nogizaka():
                     "category": item.get('cate', 'NEWS'),
                     "link": "https://www.nogizaka46.com" + item.get('link_url', '')
                 })
-    except: pass
+    except Exception as e:
+        print(f"N46 News API Error: {e}")
+
     # Schedule
     try:
         res = requests.get(schedule_api, headers=headers)
@@ -63,7 +66,8 @@ def scrape_nogizaka():
                     "category": item.get('cate_name', 'MEDIA'),
                     "link": "https://www.nogizaka46.com" + item.get('link_url', '')
                 })
-    except: pass
+    except Exception as e:
+        print(f"N46 Schedule API Error: {e}")
     return news, schedules
 
 def scrape_bokuao():
@@ -80,7 +84,6 @@ def scrape_bokuao():
         items = soup.select("a.clearfix")
         for item in items:
             date_el = item.select_one("time")
-            # Title is the last P in the div
             p_tags = item.select("div p")
             if date_el and p_tags:
                 news.append({
@@ -90,50 +93,50 @@ def scrape_bokuao():
                     "category": p_tags[0].get_text(strip=True) if len(p_tags) > 1 else "NEWS",
                     "link": "https://bokuao.com" + item.get("href", "")
                 })
-    except: pass
+    except Exception as e:
+        print(f"Bokuao News Error: {e}")
 
-    # Schedule
+    # Schedule (using strictly identified HTML structure)
     try:
         res = requests.get(schedule_url, headers=headers)
         soup = BeautifulSoup(res.text, "html.parser")
-        # Direct list items have the date and sub-items
-        days = soup.select(".schedule_list > li")
-        for day in days:
-            date_el = day.select_one(".date strong")
-            date_val = normalize_date(date_el.get_text(strip=True) if date_el else "")
+        
+        # Day blocks are <li> tags within the schedule list
+        day_blocks = soup.select("ul.list--schedule > li")
+        for block in day_blocks:
+            # Date header
+            date_el = block.select_one("p.date strong")
+            if not date_el: continue
             
-            # Each event inside the day
-            events = day.select(".list__item a")
+            date_val = normalize_date(date_el.get_text(strip=True))
+            
+            # Individual event links inside the block
+            events = block.select("a[href*='/schedule/detail/']")
             for event in events:
                 try:
-                    title_el = event.select_one(".tit") or event.select_one("p")
-                    info_el = event.select_one(".list__txt")
+                    title_el = event.select_one("p.tit")
+                    cat_el = event.select_one("p.category")
+                    time_el = event.select_one("p.time")
                     
-                    info_text = info_el.get_text(strip=True) if info_el else ""
-                    # Improved parsing: handles no-time cases (e.g. MAGAZINE)
-                    match = re.search(r'^([A-Z/&/_ ]+)?(\d{2}:\d{2}.*)?$', info_text)
-                    if match:
-                        category = match.group(1).strip() if match.group(1) else "MEDIA"
-                        time = match.group(2).strip() if match.group(2) else ""
-                    else:
-                        category = info_text
-                        time = ""
-
-                    schedules.append({
-                        "source": "bokuao",
-                        "date": date_val,
-                        "time": time,
-                        "title": title_el.get_text(strip=True),
-                        "category": category,
-                        "link": "https://bokuao.com" + event.get("href", "")
-                    })
-                except: continue
-    except: pass
+                    if title_el:
+                        schedules.append({
+                            "source": "bokuao",
+                            "date": date_val,
+                            "time": time_el.get_text(strip=True) if time_el else "",
+                            "title": title_el.get_text(strip=True),
+                            "category": cat_el.get_text(strip=True) if cat_el else "MEDIA",
+                            "link": "https://bokuao.com" + event.get("href", "")
+                        })
+                except Exception as e:
+                    print(f"Bokuao Item Error: {e}")
+                    continue
+    except Exception as e:
+        print(f"Bokuao Schedule Error: {e}")
 
     return news, schedules
 
 def main():
-    print("Scraping with improved fail-safes...")
+    print("Scraping started with final structural selectors...")
     n46_news, n46_sched = scrape_nogizaka()
     ba_news, ba_sched = scrape_bokuao()
     
@@ -146,7 +149,8 @@ def main():
     os.makedirs("data", exist_ok=True)
     with open("data/fan_data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
-    print(f"Done. News: {len(data['news'])}, Sched: {len(data['schedule'])}")
+    
+    print(f"Done. Nogizaka46: {len(n46_news)} news, {len(n46_sched)} sched. Bokuao: {len(ba_news)} news, {len(ba_sched)} sched.")
 
 if __name__ == "__main__":
     main()
