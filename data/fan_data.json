@@ -1,0 +1,621 @@
+{
+  "last_updated": "2026-04-19T10:58:49.512931",
+  "news": [
+    {
+      "source": "bokuao",
+      "date": "2026-04-19",
+      "title": "NEWS",
+      "category": "NEWS",
+      "link": "https://bokuao.com/news/detail/5058"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-17",
+      "title": "OTHER",
+      "category": "OTHER",
+      "link": "https://bokuao.com/news/detail/5056"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-17",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT",
+      "link": "https://bokuao.com/news/detail/5039"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-17",
+      "title": "NEWS",
+      "category": "NEWS",
+      "link": "https://bokuao.com/news/detail/5053"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-17",
+      "title": "RADIO",
+      "category": "RADIO",
+      "link": "https://bokuao.com/news/detail/5045"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-16",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/news/detail/5051"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-15",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/news/detail/5048"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-15",
+      "title": "RADIO",
+      "category": "RADIO",
+      "link": "https://bokuao.com/news/detail/5042"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-15",
+      "title": "MAGAZINE＆BOOK",
+      "category": "MAGAZINE＆BOOK",
+      "link": "https://bokuao.com/news/detail/5040"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-13",
+      "title": "NEWS",
+      "category": "NEWS",
+      "link": "https://bokuao.com/news/detail/5033"
+    }
+  ],
+  "schedule": [
+    {
+      "source": "bokuao",
+      "date": "2026-04-01",
+      "time": "",
+      "title": "MAGAZINE＆BOOKS",
+      "category": "MAGAZINE＆BOOKS",
+      "link": "https://bokuao.com/schedule/detail/4973"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-01",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER18:00〜18:30",
+      "link": "https://bokuao.com/schedule/detail/4961"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-01",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO20:00〜20:56",
+      "link": "https://bokuao.com/schedule/detail/4876"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-02",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER18:00〜20:15",
+      "link": "https://bokuao.com/schedule/detail/4962"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-02",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO22:50〜22:59",
+      "link": "https://bokuao.com/schedule/detail/4953"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-03",
+      "time": "",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/schedule/detail/4985"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-03",
+      "time": "",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/schedule/detail/4989"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-03",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER18:00〜18:30",
+      "link": "https://bokuao.com/schedule/detail/4963"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-04",
+      "time": "",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT14:30〜20:00",
+      "link": "https://bokuao.com/schedule/detail/4590"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-04",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO22:00〜22:30",
+      "link": "https://bokuao.com/schedule/detail/4943"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-05",
+      "time": "",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT00:00〜23:59",
+      "link": "https://bokuao.com/schedule/detail/4806"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-05",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO13:00〜23:59",
+      "link": "https://bokuao.com/schedule/detail/4958"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-06",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER19:30〜20:00",
+      "link": "https://bokuao.com/schedule/detail/4996"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-07",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO02:30〜03:00",
+      "link": "https://bokuao.com/schedule/detail/4949"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-07",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO13:00〜15:00",
+      "link": "https://bokuao.com/schedule/detail/5000"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-07",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER19:00〜20:45",
+      "link": "https://bokuao.com/schedule/detail/4997"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-08",
+      "time": "",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/schedule/detail/5004"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-08",
+      "time": "",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/schedule/detail/5003"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-08",
+      "time": "",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/schedule/detail/5006"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-08",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER18:15〜18:45",
+      "link": "https://bokuao.com/schedule/detail/4998"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-08",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO20:00〜20:56",
+      "link": "https://bokuao.com/schedule/detail/5007"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-09",
+      "time": "",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/schedule/detail/5024"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-09",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO22:50〜22:59",
+      "link": "https://bokuao.com/schedule/detail/4954"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-10",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO20:00〜21:00",
+      "link": "https://bokuao.com/schedule/detail/5012"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-11",
+      "time": "",
+      "title": "BIRTHDAY",
+      "category": "BIRTHDAY",
+      "link": "https://bokuao.com/schedule/detail/3419"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-11",
+      "time": "",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/schedule/detail/5029"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-11",
+      "time": "",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT14:30〜20:00",
+      "link": "https://bokuao.com/schedule/detail/4592"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-11",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO22:00〜22:30",
+      "link": "https://bokuao.com/schedule/detail/4944"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-12",
+      "time": "",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT16:30〜20:00",
+      "link": "https://bokuao.com/schedule/detail/4589"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-13",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER18:00〜18:30",
+      "link": "https://bokuao.com/schedule/detail/5030"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-14",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO02:30〜03:00",
+      "link": "https://bokuao.com/schedule/detail/4950"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-15",
+      "time": "",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/schedule/detail/5049"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-15",
+      "time": "",
+      "title": "MAGAZINE＆BOOKS",
+      "category": "MAGAZINE＆BOOKS",
+      "link": "https://bokuao.com/schedule/detail/5041"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-15",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO14:10〜14:20",
+      "link": "https://bokuao.com/schedule/detail/4993"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-15",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER18:00〜18:30",
+      "link": "https://bokuao.com/schedule/detail/5038"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-15",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO20:00〜20:56",
+      "link": "https://bokuao.com/schedule/detail/5008"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-16",
+      "time": "",
+      "title": "WEB",
+      "category": "WEB",
+      "link": "https://bokuao.com/schedule/detail/5052"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-16",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO00:55〜01:00",
+      "link": "https://bokuao.com/schedule/detail/5013"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-16",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO09:00〜09:10",
+      "link": "https://bokuao.com/schedule/detail/4947"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-16",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER18:00〜18:30",
+      "link": "https://bokuao.com/schedule/detail/5031"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-16",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER20:00〜21:00",
+      "link": "https://bokuao.com/schedule/detail/4966"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-16",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO22:50〜22:59",
+      "link": "https://bokuao.com/schedule/detail/4955"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-17",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER00:00〜23:59",
+      "link": "https://bokuao.com/schedule/detail/5057"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-17",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER19:00〜19:30",
+      "link": "https://bokuao.com/schedule/detail/5032"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-18",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER00:00〜23:59",
+      "link": "https://bokuao.com/schedule/detail/4844"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-18",
+      "time": "",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT00:00〜23:59",
+      "link": "https://bokuao.com/schedule/detail/4807"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-18",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO22:00〜22:30",
+      "link": "https://bokuao.com/schedule/detail/4945"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-19",
+      "time": "",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT00:00〜23:59",
+      "link": "https://bokuao.com/schedule/detail/5036"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-19",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO13:00〜23:59",
+      "link": "https://bokuao.com/schedule/detail/4959"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-19",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER20:00〜20:30",
+      "link": "https://bokuao.com/schedule/detail/5037"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-20",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER17:30〜18:00",
+      "link": "https://bokuao.com/schedule/detail/5054"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-21",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO02:30〜03:00",
+      "link": "https://bokuao.com/schedule/detail/4951"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-22",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO20:00〜20:56",
+      "link": "https://bokuao.com/schedule/detail/5009"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-23",
+      "time": "",
+      "title": "MAGAZINE＆BOOKS",
+      "category": "MAGAZINE＆BOOKS",
+      "link": "https://bokuao.com/schedule/detail/4976"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-23",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO09:00〜09:10",
+      "link": "https://bokuao.com/schedule/detail/4948"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-23",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO16:00〜19:00",
+      "link": "https://bokuao.com/schedule/detail/5043"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-23",
+      "time": "",
+      "title": "OTHER",
+      "category": "OTHER18:00〜18:30",
+      "link": "https://bokuao.com/schedule/detail/5055"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-23",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO22:50〜22:59",
+      "link": "https://bokuao.com/schedule/detail/4956"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-24",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO13:00〜15:00",
+      "link": "https://bokuao.com/schedule/detail/5044"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-25",
+      "time": "",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT14:30〜20:00",
+      "link": "https://bokuao.com/schedule/detail/4593"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-25",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO22:00〜22:30",
+      "link": "https://bokuao.com/schedule/detail/4946"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-26",
+      "time": "",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT00:00〜23:59",
+      "link": "https://bokuao.com/schedule/detail/4803"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-26",
+      "time": "",
+      "title": "TV",
+      "category": "TV19:30〜19:45",
+      "link": "https://bokuao.com/schedule/detail/4911"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-27",
+      "time": "",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT19:00〜20:00",
+      "link": "https://bokuao.com/schedule/detail/4901"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-28",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO02:30〜03:00",
+      "link": "https://bokuao.com/schedule/detail/4952"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-29",
+      "time": "",
+      "title": "LIVE/EVENT",
+      "category": "LIVE/EVENT00:00〜23:59",
+      "link": "https://bokuao.com/schedule/detail/4808"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-29",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO20:00〜20:56",
+      "link": "https://bokuao.com/schedule/detail/5010"
+    },
+    {
+      "source": "bokuao",
+      "date": "2026-04-30",
+      "time": "",
+      "title": "RADIO",
+      "category": "RADIO22:50〜22:59",
+      "link": "https://bokuao.com/schedule/detail/4957"
+    }
+  ]
+}
