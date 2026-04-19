@@ -8,6 +8,7 @@ def normalize_date(date_str):
     """Converts various date formats to YYYY-MM-DD."""
     if not date_str:
         return ""
+    # Aggressively strip white spaces and newlines
     clean_str = re.sub(r'[\s\n\r\t]', '', date_str)
     current_year = datetime.now().year
     
@@ -24,7 +25,6 @@ def normalize_date(date_str):
 def parse_jsonp(text):
     """Parses JSONP response (res({...});) into a Python dict."""
     try:
-        # Extract the content inside res(...)
         json_str = re.search(r'^res\((.*)\);$', text.strip(), re.DOTALL).group(1)
         return json.loads(json_str)
     except Exception as e:
@@ -33,7 +33,6 @@ def parse_jsonp(text):
 
 def scrape_nogizaka():
     current_month_str = datetime.now().strftime("%Y%m")
-    # Using internal APIs for 100% reliability
     news_api = f"https://www.nogizaka46.com/s/n46/api/list/news?dy={current_month_str}"
     schedule_api = f"https://www.nogizaka46.com/s/n46/api/list/schedule?dy={current_month_str}"
     
@@ -64,7 +63,6 @@ def scrape_nogizaka():
         res_data = parse_jsonp(res.text)
         if res_data and 'data' in res_data:
             for item in res_data['data']:
-                # Extract date components
                 y, m, d = item.get('date', '').split('/')
                 schedules.append({
                     "source": "nogizaka46",
@@ -80,29 +78,29 @@ def scrape_nogizaka():
     return news, schedules
 
 def scrape_bokuao():
+    from bs4 import BeautifulSoup
     news_url = "https://bokuao.com/news/1/"
     schedule_url = "https://bokuao.com/schedule/list/"
-    headers = {'User-Agent': 'Mozilla/5.0'}
-    
-    from bs4 import BeautifulSoup
+    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
     
     news = []
     try:
         res = requests.get(news_url, headers=headers)
         soup = BeautifulSoup(res.text, "html.parser")
-        # Selector refined to ul.news_list li
-        items = soup.select(".news_list li a")
+        # Structure-based selector for items
+        items = soup.select("a.clearfix")
         for item in items:
-            title_el = item.select_one(".tit")
-            date_el = item.select_one(".date")
-            category_el = item.select_one(".label")
-            
-            if date_el and title_el:
+            date_el = item.select_one("time")
+            # Title is the last P in the container
+            p_tags = item.select("div p")
+            if date_el and p_tags:
+                title = p_tags[-1].get_text(strip=True)
+                category = p_tags[0].get_text(strip=True) if len(p_tags) > 1 else "NEWS"
                 news.append({
                     "source": "bokuao",
                     "date": normalize_date(date_el.get_text(strip=True)),
-                    "title": title_el.get_text(strip=True),
-                    "category": category_el.get_text(strip=True) if category_el else "NEWS",
+                    "title": title,
+                    "category": category,
                     "link": "https://bokuao.com" + item.get("href", "")
                 })
     except Exception as e:
@@ -112,39 +110,36 @@ def scrape_bokuao():
     try:
         res = requests.get(schedule_url, headers=headers)
         soup = BeautifulSoup(res.text, "html.parser")
-        # Grouped by day in ul.schedule_list > li
-        days = soup.select(".schedule_list > li")
-        for day in days:
-            date_el = day.select_one(".date strong")
-            date_str = normalize_date(date_el.get_text(strip=True) if date_el else "")
+        # Find all schedule links
+        links = soup.select("a[href*='/schedule/detail/']")
+        for link in links:
+            title_el = link.select_one("p")
+            info_div = link.select_one("div")
+            # Find the date heading preceding this link
+            date_header = link.find_previous("p", class_="date")
+            date_str = normalize_date(date_header.get_text(strip=True) if date_header else "")
             
-            events = day.select(".list__item a")
-            for event in events:
-                title_el = event.select_one(".tit")
-                time_info = event.select_one(".list__txt") # contains cat and time
+            if title_el:
+                info_text = info_div.get_text(strip=True) if info_div else ""
+                parts = info_text.split()
+                category = parts[0] if parts else "MEDIA"
+                time = parts[1] if len(parts) > 1 else ""
                 
-                if title_el:
-                    info_text = time_info.get_text(strip=True) if time_info else ""
-                    # Format is often "CATEGORY 18:00〜"
-                    parts = info_text.split()
-                    category = parts[0] if parts else "MEDIA"
-                    time = parts[1] if len(parts) > 1 else ""
-                    
-                    schedules.append({
-                        "source": "bokuao",
-                        "date": date_str,
-                        "time": time,
-                        "title": title_el.get_text(strip=True),
-                        "category": category,
-                        "link": "https://bokuao.com" + event.get("href", "")
-                    })
+                schedules.append({
+                    "source": "bokuao",
+                    "date": date_str,
+                    "time": time,
+                    "title": title_el.get_text(strip=True),
+                    "category": category,
+                    "link": "https://bokuao.com" + link.get("href", "")
+                })
     except Exception as e:
         print(f"Bokuao Schedule Error: {e}")
 
     return news, schedules
 
 def main():
-    print("Scraping with API and refined selectors...")
+    print("Scraping starting...")
     n46_news, n46_sched = scrape_nogizaka()
     ba_news, ba_sched = scrape_bokuao()
     
@@ -158,7 +153,7 @@ def main():
     with open("data/fan_data.json", "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
     
-    print(f"Saved {len(data['news'])} news and {len(data['schedule'])} schedules.")
+    print(f"Finished. Saved {len(data['news'])} news and {len(data['schedule'])} schedules.")
 
 if __name__ == "__main__":
     main()
