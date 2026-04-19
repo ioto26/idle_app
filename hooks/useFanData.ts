@@ -33,7 +33,8 @@ export const useFanData = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const res = await fetch(DATA_URL);
+      // Add timestamp to bypass GitHub RAW cache (approx 5 mins)
+      const res = await fetch(`${DATA_URL}?t=${new Date().getTime()}`);
       const json = await res.json();
       setData(json);
     } catch (err) {
