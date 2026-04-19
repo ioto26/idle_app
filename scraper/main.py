@@ -5,11 +5,11 @@ import os
 import re
 
 def normalize_date(date_str):
-    """Converts various date formats to YYYY-MM-DD."""
+    """Converts various date formats to YYYY-MM-DD and removes all hidden chars."""
     if not date_str:
         return ""
-    # Aggressively strip white spaces and newlines
-    clean_str = re.sub(r'[\s\n\r\t]', '', date_str)
+    # Strip everything except numbers and dots/hyphens, then replace dots with hyphens
+    clean_str = re.sub(r'[^0-9./-]', '', date_str.replace('\n', '').replace('\r', ''))
     current_year = datetime.now().year
     
     match_full = re.search(r'(\d{4})[./-](\d{2})[./-](\d{2})', clean_str)
@@ -23,12 +23,10 @@ def normalize_date(date_str):
     return clean_str
 
 def parse_jsonp(text):
-    """Parses JSONP response (res({...});) into a Python dict."""
     try:
         json_str = re.search(r'^res\((.*)\);$', text.strip(), re.DOTALL).group(1)
         return json.loads(json_str)
     except Exception as e:
-        print(f"JSONP parse error: {e}")
         return None
 
 def scrape_nogizaka():
@@ -54,8 +52,7 @@ def scrape_nogizaka():
                     "category": item.get('cate', 'NEWS'),
                     "link": "https://www.nogizaka46.com" + item.get('link_url', '')
                 })
-    except Exception as e:
-        print(f"N46 News API Error: {e}")
+    except: pass
 
     schedules = []
     try:
@@ -72,8 +69,7 @@ def scrape_nogizaka():
                     "category": item.get('cate_name', 'MEDIA'),
                     "link": "https://www.nogizaka46.com" + item.get('link_url', '')
                 })
-    except Exception as e:
-        print(f"N46 Schedule API Error: {e}")
+    except: pass
             
     return news, schedules
 
@@ -81,17 +77,15 @@ def scrape_bokuao():
     from bs4 import BeautifulSoup
     news_url = "https://bokuao.com/news/1/"
     schedule_url = "https://bokuao.com/schedule/list/"
-    headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
+    headers = {'User-Agent': 'Mozilla/5.0'}
     
     news = []
     try:
         res = requests.get(news_url, headers=headers)
         soup = BeautifulSoup(res.text, "html.parser")
-        # Structure-based selector for items
         items = soup.select("a.clearfix")
         for item in items:
             date_el = item.select_one("time")
-            # Title is the last P in the container
             p_tags = item.select("div p")
             if date_el and p_tags:
                 title = p_tags[-1].get_text(strip=True)
@@ -103,27 +97,32 @@ def scrape_bokuao():
                     "category": category,
                     "link": "https://bokuao.com" + item.get("href", "")
                 })
-    except Exception as e:
-        print(f"Bokuao News Error: {e}")
+    except: pass
 
     schedules = []
     try:
         res = requests.get(schedule_url, headers=headers)
         soup = BeautifulSoup(res.text, "html.parser")
-        # Find all schedule links
         links = soup.select("a[href*='/schedule/detail/']")
         for link in links:
-            title_el = link.select_one("p")
-            info_div = link.select_one("div")
-            # Find the date heading preceding this link
+            # Re-scoping title selection: title is p.title inside the link
+            title_el = link.select_one("p.title")
+            info_div = link.select_one(".list__txt")
             date_header = link.find_previous("p", class_="date")
             date_str = normalize_date(date_header.get_text(strip=True) if date_header else "")
             
             if title_el:
                 info_text = info_div.get_text(strip=True) if info_div else ""
-                parts = info_text.split()
-                category = parts[0] if parts else "MEDIA"
-                time = parts[1] if len(parts) > 1 else ""
+                
+                # Intelligent splitting using Regex for "CATEGORY HH:MM" patterns
+                # This handles cases like "RADIO13:00" or "TV 19:00"
+                category = info_text
+                time = ""
+                # Search for the start of the time pattern (numbers and colon)
+                match = re.search(r'([A-Z/&/_]+)?(\d{1,2}:\d{2}.*)', info_text)
+                if match:
+                    category = match.group(1) or "MEDIA"
+                    time = match.group(2)
                 
                 schedules.append({
                     "source": "bokuao",
@@ -133,8 +132,7 @@ def scrape_bokuao():
                     "category": category,
                     "link": "https://bokuao.com" + link.get("href", "")
                 })
-    except Exception as e:
-        print(f"Bokuao Schedule Error: {e}")
+    except: pass
 
     return news, schedules
 
