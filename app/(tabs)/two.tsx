@@ -75,16 +75,32 @@ export default function ScheduleScreen() {
     return marks;
   }, [fanData, personalEvents, selectedDate]);
 
-  // Filter events for selected day
+  // Helper to extract time value for sorting (HH:MM -> minutes)
+  const getTimeValue = (timeStr?: string) => {
+    if (!timeStr) return 9999;
+    const match = timeStr.match(/(\d{1,2}):(\d{2})/);
+    if (match) {
+      return parseInt(match[1]) * 60 + parseInt(match[2]);
+    }
+    return 9998; // Undated but has some text
+  };
+
+  // Filter and Sort events for selected day
   const dailyEvents = useMemo(() => {
     const selectedKey = selectedDate.replace(/[^\d-]/g, '').trim();
     const official = fanData?.schedule.filter(s => s.date.replace(/[^\d-]/g, '') === selectedKey) || [];
     const personal = personalEvents.filter(e => e.date.replace(/[^\d-]/g, '') === selectedKey);
     
-    return [
-      ...official.map(o => ({ ...o, type: 'official' })),
-      ...personal.map(p => ({ ...p, type: 'personal' }))
+    const all = [
+      ...official.map(o => ({ ...o, type: 'official' as const })),
+      ...personal.map(p => ({ ...p, type: 'personal' as const })),
     ];
+
+    return all.sort((a, b) => {
+      const timeA = getTimeValue(a.type === 'official' ? (a as any).time : (a as any).time);
+      const timeB = getTimeValue(b.type === 'official' ? (b as any).time : (b as any).time);
+      return timeA - timeB;
+    });
   }, [fanData, personalEvents, selectedDate]);
 
   return (

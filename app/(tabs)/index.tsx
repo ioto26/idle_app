@@ -1,23 +1,23 @@
-import React from 'react';
-import { 
-  StyleSheet, 
-  FlatList, 
-  TouchableOpacity, 
-  Linking, 
-  ActivityIndicator,
-  RefreshControl 
-} from 'react-native';
 import { Text, View } from '@/components/Themed';
-import { useFanData, FanNews } from '@/hooks/useFanData';
 import { Colors, GroupThemes } from '@/constants/Theme';
+import { FanNews, useFanData } from '@/hooks/useFanData';
 import { BlurView } from 'expo-blur';
-import { ChevronRight, Bell } from 'lucide-react-native';
+import { ChevronRight } from 'lucide-react-native';
+import React, { useMemo } from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  Linking,
+  RefreshControl,
+  StyleSheet,
+  TouchableOpacity
+} from 'react-native';
 
 const NewsCard = ({ item }: { item: FanNews }) => {
   const theme = GroupThemes[item.source] || GroupThemes.nogizaka46;
-  
+
   return (
-    <TouchableOpacity 
+    <TouchableOpacity
       activeOpacity={0.7}
       onPress={() => Linking.openURL(item.link)}
     >
@@ -42,6 +42,12 @@ const NewsCard = ({ item }: { item: FanNews }) => {
 export default function DashBoardScreen() {
   const { data, loading, refetch } = useFanData();
 
+  const sortedNews = useMemo(() => {
+    if (!data?.news) return [];
+    // Sort by date (descending: newest first)
+    return [...data.news].sort((a, b) => b.date.localeCompare(a.date));
+  }, [data]);
+
   if (loading && !data) {
     return (
       <View style={styles.center}>
@@ -53,7 +59,7 @@ export default function DashBoardScreen() {
   return (
     <View style={styles.container}>
       <FlatList
-        data={data?.news || []}
+        data={sortedNews}
         keyExtractor={(item, index) => `${item.link}-${index}`}
         renderItem={({ item }) => <NewsCard item={item} />}
         contentContainerStyle={styles.listContent}
