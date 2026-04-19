@@ -34,24 +34,32 @@ export default function ScheduleScreen() {
     setPersonalEvents(events);
   };
 
+  useEffect(() => {
+    console.log('FanData updated:', fanData?.schedule.length, 'schedule items');
+  }, [fanData]);
+
   // Merge events for markers
   const markedDates = useMemo(() => {
     const marks: any = {};
     
     // Official Schedules
     fanData?.schedule.forEach(item => {
-      const dateKey = item.date; // Scraper now provides YYYY-MM-DD
+      const dateKey = item.date.trim(); // Ensure no spaces
         
       if (!marks[dateKey]) marks[dateKey] = { dots: [] };
       
-      const theme = GroupThemes[item.source] || GroupThemes.nogizaka46;
-      marks[dateKey].dots.push({ key: item.link, color: theme.primary });
+      const theme = GroupThemes[item.source as keyof typeof GroupThemes] || GroupThemes.nogizaka46;
+      marks[dateKey].dots.push({ 
+        key: `${item.source}-${item.link}`, 
+        color: theme.primary 
+      });
     });
 
     // Personal Events
     personalEvents.forEach(event => {
-      if (!marks[event.date]) marks[event.date] = { dots: [] };
-      marks[event.date].dots.push({ key: `p-${event.id}`, color: Colors.accent });
+      const dateKey = event.date.trim();
+      if (!marks[dateKey]) marks[dateKey] = { dots: [] };
+      marks[dateKey].dots.push({ key: `p-${event.id}`, color: Colors.accent });
     });
 
     // Mark selected
