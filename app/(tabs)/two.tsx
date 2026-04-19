@@ -44,7 +44,8 @@ export default function ScheduleScreen() {
     
     // Official Schedules
     fanData?.schedule.forEach(item => {
-      const dateKey = item.date.trim(); // Ensure no spaces
+      // Final safety: remove anything that isn't a number or hyphen
+      const dateKey = item.date.replace(/[^\d-]/g, '').trim(); 
         
       if (!marks[dateKey]) marks[dateKey] = { dots: [] };
       
@@ -57,17 +58,18 @@ export default function ScheduleScreen() {
 
     // Personal Events
     personalEvents.forEach(event => {
-      const dateKey = event.date.trim();
+      const dateKey = event.date.replace(/[^\d-]/g, '').trim();
       if (!marks[dateKey]) marks[dateKey] = { dots: [] };
       marks[dateKey].dots.push({ key: `p-${event.id}`, color: Colors.accent });
     });
 
     // Mark selected
-    if (marks[selectedDate]) {
-      marks[selectedDate].selected = true;
-      marks[selectedDate].selectedColor = Colors.purple;
+    const selectedKey = selectedDate.replace(/[^\d-]/g, '').trim();
+    if (marks[selectedKey]) {
+      marks[selectedKey].selected = true;
+      marks[selectedKey].selectedColor = Colors.purple;
     } else {
-      marks[selectedDate] = { selected: true, selectedColor: Colors.purple };
+      marks[selectedKey] = { selected: true, selectedColor: Colors.purple };
     }
 
     return marks;
@@ -75,9 +77,9 @@ export default function ScheduleScreen() {
 
   // Filter events for selected day
   const dailyEvents = useMemo(() => {
-    const official = fanData?.schedule.filter(s => s.date === selectedDate) || [];
-
-    const personal = personalEvents.filter(e => e.date === selectedDate);
+    const selectedKey = selectedDate.replace(/[^\d-]/g, '').trim();
+    const official = fanData?.schedule.filter(s => s.date.replace(/[^\d-]/g, '') === selectedKey) || [];
+    const personal = personalEvents.filter(e => e.date.replace(/[^\d-]/g, '') === selectedKey);
     
     return [
       ...official.map(o => ({ ...o, type: 'official' })),
