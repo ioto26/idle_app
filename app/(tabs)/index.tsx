@@ -2,7 +2,7 @@ import { Text, View } from '@/components/Themed';
 import { Colors, GroupThemes } from '@/constants/Theme';
 import { FanNews, useFanData } from '@/hooks/useFanData';
 import { BlurView } from 'expo-blur';
-import { ChevronRight } from 'lucide-react-native';
+import { ChevronRight, Search, X } from 'lucide-react-native';
 import React, { useMemo } from 'react';
 import {
   ActivityIndicator,
@@ -10,6 +10,7 @@ import {
   Linking,
   RefreshControl,
   StyleSheet,
+  TextInput,
   TouchableOpacity
 } from 'react-native';
 
@@ -42,22 +43,59 @@ const NewsCard = ({ item }: { item: FanNews }) => {
 export default function DashBoardScreen() {
   const { data, loading, refetch } = useFanData();
 
+  const [searchQuery, setSearchQuery] = React.useState('');
+
   const sortedNews = useMemo(() => {
     if (!data?.news) return [];
-    // Sort by date (descending: newest first)
-    return [...data.news].sort((a, b) => b.date.localeCompare(a.date));
-  }, [data]);
+    let filtered = [...data.news];
+
+    if (searchQuery) {
+      const lowQuery = searchQuery.toLowerCase();
+      filtered = filtered.filter(item =>
+        item.title.toLowerCase().includes(lowQuery) ||
+        item.category.toLowerCase().includes(lowQuery)
+      );
+    }
+
+    return filtered.sort((a, b) => b.date.localeCompare(a.date));
+  }, [data, searchQuery]);
 
   if (loading && !data) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator color={Colors.purple} size="large" />
+        <ActivityIndicator size="large" color={Colors.purple} />
       </View>
     );
   }
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.headerTitle}>Feed</Text>
+        <TouchableOpacity onPress={refetch} style={styles.refreshBtn}>
+          <Text style={styles.refreshText}>Reload</Text>
+        </TouchableOpacity>
+      </View>
+
+      <View style={styles.searchContainer}>
+        <BlurView intensity={20} style={styles.searchBlur}>
+          <Search size={18} color={Colors.textSecondary} style={styles.searchIcon} />
+          <TextInput
+            placeholder="Search news..."
+            placeholderTextColor={Colors.textSecondary}
+            style={styles.searchInput}
+            value={searchQuery}
+            onChangeText={setSearchQuery}
+            autoCorrect={false}
+          />
+          {searchQuery !== '' && (
+            <TouchableOpacity onPress={() => setSearchQuery('')}>
+              <X size={18} color={Colors.textSecondary} />
+            </TouchableOpacity>
+          )}
+        </BlurView>
+      </View>
+
       <FlatList
         data={sortedNews}
         keyExtractor={(item, index) => `${item.link}-${index}`}
@@ -65,12 +103,6 @@ export default function DashBoardScreen() {
         contentContainerStyle={styles.listContent}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={refetch} tintColor={Colors.purple} />
-        }
-        ListHeaderComponent={
-          <View style={styles.header}>
-            <Text style={styles.headerTitle}>最新ニュース</Text>
-            <Text style={styles.headerSubtitle}>お気に入りのアイドルの最新情報</Text>
-          </View>
         }
       />
     </View>
@@ -88,24 +120,53 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Colors.background,
   },
-  listContent: {
-    padding: 20,
-    paddingBottom: 100,
-  },
   header: {
-    marginBottom: 20,
-    backgroundColor: 'transparent',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingTop: 60,
+    paddingBottom: 10,
   },
   headerTitle: {
     fontSize: 28,
-    fontWeight: '800',
+    fontWeight: 'bold',
     color: Colors.text,
-    letterSpacing: -0.5,
   },
-  headerSubtitle: {
-    fontSize: 14,
-    color: Colors.textSecondary,
-    marginTop: 4,
+  refreshBtn: {
+    padding: 8,
+  },
+  refreshText: {
+    color: Colors.purple,
+    fontWeight: '600',
+  },
+  searchContainer: {
+    paddingHorizontal: 20,
+    marginBottom: 15,
+  },
+  searchBlur: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 15,
+    height: 45,
+    borderRadius: 12,
+    overflow: 'hidden',
+    backgroundColor: 'rgba(255,255,255,0.05)',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.1)',
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    color: Colors.text,
+    fontSize: 16,
+    height: '100%',
+  },
+  listContent: {
+    paddingHorizontal: 20,
+    paddingBottom: 100,
   },
   card: {
     padding: 16,
